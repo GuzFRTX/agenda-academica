@@ -954,6 +954,12 @@ body.reduced-motion .auth-screen::after {
   color: var(--text-muted);
 }
 
+#sidebar-greeting {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .icon-sprite {
   position: absolute;
   width: 0;
@@ -1370,6 +1376,23 @@ body[data-theme="pandora"] .background-effects::before {
   font-size: 32px;
   font-weight: 500;
   color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.greeting-inline-icon {
+  width: 0.72em;
+  height: 0.72em;
+  color: var(--accent2);
+  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.38));
+}
+
+.sidebar-greeting-icon {
+  width: 12px;
+  height: 12px;
+  color: var(--accent);
 }
 
 .greeting-banner p {

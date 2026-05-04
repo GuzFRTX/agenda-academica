@@ -51,6 +51,21 @@ function iconMarkup(name, className = "") {
   return `<svg class="${classes}" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
 }
 
+function createSvgIcon(name, className = "") {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", ["app-icon", className].filter(Boolean).join(" "));
+  svg.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+  use.setAttribute("href", `#i-${name}`);
+  svg.append(use);
+  return svg;
+}
+
+function setTextWithIcon(elementId, text, iconName, iconClassName = "") {
+  const element = document.getElementById(elementId);
+  element.replaceChildren(document.createTextNode(text), createSvgIcon(iconName, iconClassName));
+}
+
 let state = createDefaultState();
 let selectedColor = DEFAULT_COLOR;
 let reminderFilter = "all";
@@ -810,8 +825,8 @@ function updateClock() {
   const greeting = getGreetingForHour(context.hour);
   window.__AGENDA_GREETING__ = greeting;
 
-  document.getElementById("dash-greeting").textContent = `${greeting}, Duda! 👋`;
-  document.getElementById("sidebar-greeting").textContent = `${greeting}! ✨`;
+  setTextWithIcon("dash-greeting", `${greeting}, Duda!`, "spark", "greeting-inline-icon");
+  setTextWithIcon("sidebar-greeting", `${greeting}!`, "spark", "sidebar-greeting-icon");
 
   const motivation = [
     "Que ótimo dia para aprender algo novo.",
