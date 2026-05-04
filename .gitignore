@@ -1,0 +1,40 @@
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local Netlify state
+.netlify/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local browser/test artifacts
+.chrome*/
+.edge*/
+auth-*.png
+mobile-*.png
+mobile-*.json
+ui-overhaul-*.png
+*-screenshot.png
+test-results/
+coverage/
+
+# Tool-generated local lockfiles not used by this Node project
+deno.lock

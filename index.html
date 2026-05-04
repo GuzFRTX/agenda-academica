@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'">
+<meta name="theme-color" content="#070f1f">
+<meta name="description" content="Agenda de estudos da Duda com grade, lembretes e alarmes em uma experiência instalável.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Duda's Agenda">
+<title>Duda's Agenda</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css?v=26">
+</head>
+<body class="auth-pending">
+<svg class="icon-sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><path d="M4 5.5h7v5.5H4zM13 5.5h7v8h-7zM4 13h7v5.5H4zM13 16h7v2.5h-7z"/></symbol>
+    <symbol id="i-schedule" viewBox="0 0 24 24"><path d="M7 3.5v3M17 3.5v3M4.5 8h15M6 5.5h12a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 18 19.5H6A1.5 1.5 0 0 1 4.5 18V7A1.5 1.5 0 0 1 6 5.5Z"/><path d="M8 11h3M13 11h3M8 15h3M13 15h3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M9.5 18.5a2.5 2.5 0 0 0 5 0M6 16.5h12l-1.5-2.2V10a4.5 4.5 0 1 0-9 0v4.3Z"/></symbol>
+    <symbol id="i-alarm" viewBox="0 0 24 24"><path d="M7 4.5 4.8 2.8M17 4.5l2.2-1.7M12 8v4.2l2.8 1.8"/><circle cx="12" cy="13" r="6.5"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m12 4 .9 1.9 2.1.5 1.6-1.5 1.8 1.8-1.5 1.6.5 2.1 1.9.9v2.4l-1.9.9-.5 2.1 1.5 1.6-1.8 1.8-1.6-1.5-2.1.5L12 20l-.9-1.9-2.1-.5-1.6 1.5-1.8-1.8 1.5-1.6-.5-2.1-1.9-.9v-2.4l1.9-.9.5-2.1-1.5-1.6 1.8-1.8 1.6 1.5 2.1-.5Z"/><circle cx="12" cy="12" r="2.6"/></symbol>
+    <symbol id="i-install" viewBox="0 0 24 24"><path d="M12 4v9M8.5 10.5 12 14l3.5-3.5M5 18.5h14"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><path d="M12 8v4.5l3 1.8"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M6.5 5.5h9a2 2 0 0 1 2 2v10.5h-9a2 2 0 0 0-2 2Z"/><path d="M6.5 5.5A2 2 0 0 0 4.5 7.5v10a2 2 0 0 0 2 2h11"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M7 3.5v3M17 3.5v3M4.5 8h15M6 5.5h12a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 18 19.5H6A1.5 1.5 0 0 1 4.5 18V7A1.5 1.5 0 0 1 6 5.5Z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 4.5a7.5 7.5 0 1 0 0 15h1.2a2.3 2.3 0 0 0 0-4.6h-.8a1.8 1.8 0 0 1 0-3.6H14a4.5 4.5 0 0 0 0-9Z"/><circle cx="8.2" cy="10.2" r="1"/><circle cx="10.8" cy="8.2" r="1"/><circle cx="7.8" cy="13.3" r="1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5.5 7.5h13M9.5 7.5v-2h5v2M8.5 10.5v6M12 10.5v6M15.5 10.5v6M7.5 7.5l.8 10a1.5 1.5 0 0 0 1.5 1.4h4.4a1.5 1.5 0 0 0 1.5-1.4l.8-10"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M8 8l8 8M16 8l-8 8"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4.5 19.5 8 18.8l8.6-8.6-2.8-2.8L5.2 16z"/><path d="m12.9 6.8 2.8 2.8M4.5 19.5h15"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 5.5 19 18H5Z"/><path d="M12 9v4.5M12 16.2h.01"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><path d="M12 10.5v4M12 8.2h.01"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 4 1.3 3.7L17 9l-3.7 1.3L12 14l-1.3-3.7L7 9l3.7-1.3ZM18 14l.7 2 .3.1-2 .7-.7 2-.7-2-2-.7 2-.7ZM6 14l.7 2 .3.1-2 .7-.7 2-.7-2-2-.7 2-.7Z"/></symbol>
+  </defs>
+</svg>
+<button class="mobile-nav-toggle" id="mobile-nav-toggle" type="button" aria-label="Abrir navegação">
+  <svg class="app-icon"><use href="#i-dashboard"></use></svg>
+</button>
+<button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Fechar navegação"></button>
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-tag">Agenda</div>
+    <h1>Duda<span>.</span></h1>
+  </div>
+
+  <div class="sidebar-avatar">
+    <button class="avatar-circle avatar-button" id="profile-avatar-btn" type="button" aria-label="Editar perfil">
+      <span class="avatar-initials" id="profile-avatar-initials">DM</span>
+      <img class="avatar-image hidden" id="profile-avatar-image" alt="Foto de perfil da Duda">
+      <span class="avatar-overlay"><svg class="app-icon avatar-overlay-icon"><use href="#i-pencil"></use></svg></span>
+    </button>
+    <input id="profile-photo-input" type="file" accept="image/*" hidden>
+    <div class="avatar-info">
+      <p>Duda Martins</p>
+      <span id="sidebar-greeting">--</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <a class="nav-item active" data-page="dashboard" href="#">
+      <svg class="app-icon nav-icon"><use href="#i-dashboard"></use></svg> Dashboard
+    </a>
+
+    <div class="nav-section-label">Estudos</div>
+    <a class="nav-item" data-page="schedule" href="#">
+      <svg class="app-icon nav-icon"><use href="#i-schedule"></use></svg> Grade de Estudos
+    </a>
+    <a class="nav-item" data-page="reminders" href="#">
+      <svg class="app-icon nav-icon"><use href="#i-bell"></use></svg> Lembretes
+    </a>
+    <a class="nav-item" data-page="alarms" href="#">
+      <svg class="app-icon nav-icon"><use href="#i-alarm"></use></svg> Alarmes
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-nav">
+      <div class="nav-section-label">App</div>
+      <a class="nav-item sidebar-utility-item" data-page="options" href="#">
+        <svg class="app-icon nav-icon"><use href="#i-settings"></use></svg> Opções
+      </a>
+    </div>
+    <button class="install-btn hidden" id="install-app-btn" type="button"><svg class="app-icon btn-icon"><use href="#i-install"></use></svg>Instalar app</button>
+    <button class="install-btn auth-password-btn" id="change-password-btn" type="button">Trocar senha</button>
+    <button class="install-btn auth-logout-btn" id="logout-app-btn" type="button">Sair</button>
+    <div class="date-widget">
+      <div class="date-day" id="sidebar-day">--</div>
+      <div class="date-rest" id="sidebar-date">--</div>
+    </div>
+  </div>
+</aside>
+
+<div class="background-effects" aria-hidden="true">
+  <div class="background-layer background-layer-mid-primary"></div>
+  <div class="background-layer background-layer-mid-secondary"></div>
+  <div class="background-layer background-layer-light-glow"></div>
+  <div class="background-layer background-layer-foreground"></div>
+</div>
+
+<main class="main">
+  <section class="page active" id="page-dashboard">
+    <div class="greeting-banner">
+      <div class="greeting-banner-layout">
+        <div class="greeting-copy">
+          <div class="greeting-sub">Bem-vinda de volta</div>
+          <h2 id="dash-greeting">Bem-vinda, Duda!</h2>
+          <p id="dash-motivation">Que ótimo dia para aprender algo novo.</p>
+          <div class="time-badge">
+            <svg class="app-icon badge-icon"><use href="#i-clock"></use></svg>
+            <span id="dash-clock">--:--</span>
+          </div>
+        </div>
+
+        <div class="flip-clock" aria-label="Horário atual">
+          <div class="flip-clock-label">Horário atual</div>
+          <div class="flip-clock-display">
+            <div class="flip-digit" data-digit="h1"><span class="flip-digit-inner">-</span></div>
+            <div class="flip-digit" data-digit="h2"><span class="flip-digit-inner">-</span></div>
+            <div class="flip-separator">:</div>
+            <div class="flip-digit" data-digit="m1"><span class="flip-digit-inner">-</span></div>
+            <div class="flip-digit" data-digit="m2"><span class="flip-digit-inner">-</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><svg class="app-icon stat-icon-svg"><use href="#i-book"></use></svg></div>
+        <div class="stat-label">Matérias</div>
+        <div class="stat-value" id="stat-subjects">0</div>
+        <div class="stat-sub">na grade</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg class="app-icon stat-icon-svg"><use href="#i-bell"></use></svg></div>
+        <div class="stat-label">Lembretes</div>
+        <div class="stat-value" id="stat-reminders">0</div>
+        <div class="stat-sub">pendentes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg class="app-icon stat-icon-svg"><use href="#i-alarm"></use></svg></div>
+        <div class="stat-label">Alarmes</div>
+        <div class="stat-value" id="stat-alarms">0</div>
+        <div class="stat-sub">ativos</div>
+      </div>
+    </div>
+
+    <div class="dash-grid-2">
+      <div class="card">
+        <div class="today-schedule">
+          <div class="section-title">Hoje — <span id="today-dayname">Segunda</span></div>
+          <div id="today-list">
+            <div class="empty-state">
+              <div class="empty-icon"><svg class="app-icon empty-icon-svg"><use href="#i-calendar"></use></svg></div>
+              Nenhuma aula hoje.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="reminders-panel">
+          <div class="section-title">Próximos Lembretes</div>
+          <div id="upcoming-reminders">
+            <div class="empty-state">
+              <div class="empty-icon"><svg class="app-icon empty-icon-svg"><use href="#i-bell"></use></svg></div>
+              Nenhum lembrete.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-schedule">
+    <div class="page-header">
+      <div class="breadcrumb">Estudos</div>
+      <h2>Grade de Estudos</h2>
+      <p>Organize suas aulas e atividades por dia da semana</p>
+    </div>
+
+    <div class="grid-controls">
+      <div class="actions-row">
+        <button class="btn btn-primary" id="add-subject-btn" type="button"><svg class="app-icon btn-icon"><use href="#i-book"></use></svg>Adicionar Matéria</button>
+        <button class="btn btn-ghost" id="add-time-row-btn" type="button"><svg class="app-icon btn-icon"><use href="#i-clock"></use></svg>Nova linha de horário</button>
+      </div>
+      <button class="btn btn-ghost" id="legend-toggle" type="button"><svg class="app-icon btn-icon"><use href="#i-palette"></use></svg>Legenda</button>
+    </div>
+
+    <div class="legend-panel" id="legend-panel">
+      <div class="legend-title">Legenda da Grade</div>
+      <div class="legend-row">
+        <div class="legend-chip"><span class="legend-swatch" style="background:#1d6fc4"></span>Matéria azul</div>
+        <div class="legend-chip"><span class="legend-swatch" style="background:#4adbb8"></span>Matéria verde</div>
+        <div class="legend-chip"><span class="legend-swatch" style="background:#ffca6b"></span>Matéria amarela</div>
+        <div class="legend-chip"><span class="legend-swatch" style="background:#ff6b8a"></span>Matéria rosa</div>
+      </div>
+      <div class="legend-row">
+        <div class="legend-chip">+ add: adiciona matéria ao horário</div>
+        <div class="legend-chip">✕: remove horário ou matéria</div>
+      </div>
+    </div>
+
+    <div class="week-grid">
+      <table class="week-table" id="week-table">
+        <thead>
+          <tr>
+            <th>Horário</th>
+            <th>Dom</th>
+            <th>Seg</th>
+            <th>Ter</th>
+            <th>Qua</th>
+            <th>Qui</th>
+            <th>Sex</th>
+            <th>Sáb</th>
+          </tr>
+        </thead>
+        <tbody id="week-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="page" id="page-reminders">
+    <div class="page-header">
+      <div class="breadcrumb">Estudos</div>
+      <h2>Lembretes</h2>
+      <p>Suas anotações e prazos importantes</p>
+    </div>
+
+    <div class="toolbar-row">
+      <div class="filter-row reminders-filters">
+        <button class="filter-chip active" data-filter="all" type="button">Todos</button>
+        <button class="filter-chip" data-filter="alta" type="button">Alta prioridade</button>
+        <button class="filter-chip" data-filter="media" type="button">Média</button>
+        <button class="filter-chip" data-filter="baixa" type="button">Baixa</button>
+        <button class="filter-chip" data-filter="done" type="button">Concluídos</button>
+      </div>
+      <button class="btn btn-primary" id="add-reminder-btn" type="button"><svg class="app-icon btn-icon"><use href="#i-bell"></use></svg>Novo Lembrete</button>
+    </div>
+
+    <div class="reminders-list" id="reminders-list"></div>
+  </section>
+
+  <section class="page" id="page-alarms">
+    <div class="page-header">
+      <div class="breadcrumb">Estudos</div>
+      <h2>Alarmes</h2>
+      <p>Configure alertas para não perder nenhuma aula</p>
+    </div>
+
+    <div class="toolbar-row toolbar-row-end">
+      <button class="btn btn-primary" id="add-alarm-btn" type="button"><svg class="app-icon btn-icon"><use href="#i-alarm"></use></svg>Novo Alarme</button>
+    </div>
+
+    <div class="alarms-list" id="alarms-list"></div>
+  </section>
+
+  <section class="page" id="page-options">
+    <div class="page-header">
+      <div class="breadcrumb">App</div>
+      <h2>Opções</h2>
+      <p>Preferências essenciais para personalizar a experiência da agenda</p>
+    </div>
+
+    <div class="settings-grid">
+      <div class="card settings-card">
+        <div class="settings-section-title">Aparência</div>
+        <div class="settings-stack">
+          <label class="settings-item" for="theme-select">
+            <div>
+              <div class="settings-label">Tema</div>
+              <p class="settings-help">Base preparada para adicionarmos novos temas visuais depois.</p>
+            </div>
+            <select class="form-input settings-select" id="theme-select">
+              <option value="ocean">Ocean</option>
+              <option value="pandora">Pandora</option>
+              <option value="hogwarts" disabled>Hogwarts em breve</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="card settings-card">
+        <div class="settings-section-title">Comportamento</div>
+        <div class="settings-stack">
+          <label class="settings-item settings-toggle-row" for="option-animations">
+            <div>
+              <div class="settings-label">Animações de interface</div>
+              <p class="settings-help">Mantém transições e fundo animado ativos no app.</p>
+            </div>
+            <input id="option-animations" type="checkbox">
+          </label>
+
+          <label class="settings-item settings-toggle-row" for="option-sound">
+            <div>
+              <div class="settings-label">Som dos alarmes</div>
+              <p class="settings-help">Toca um som quando um alarme recorrente dispara.</p>
+            </div>
+            <input id="option-sound" type="checkbox">
+          </label>
+        </div>
+      </div>
+
+      <div class="card settings-card">
+        <div class="settings-section-title">Instalação</div>
+        <div class="settings-stack">
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">Status do app</div>
+              <p class="settings-help" id="install-status-text">Pronto para uso no navegador e preparado para instalação quando disponível.</p>
+            </div>
+          </div>
+          <button class="btn btn-primary settings-install-btn hidden" id="options-install-btn" type="button"><svg class="app-icon btn-icon"><use href="#i-install"></use></svg>Instalar neste dispositivo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="pandora-music-panel" id="pandora-music-panel" aria-hidden="true">
+  <button class="pandora-music-toggle" id="pandora-music-toggle" type="button" aria-pressed="false" aria-label="Pausar trilha de Pandora">
+    <span class="pandora-music-toggle-label" id="pandora-music-toggle-label">Pausar trilha de Pandora</span>
+  </button>
+  <label class="pandora-volume" for="pandora-volume-range">
+    <span class="pandora-volume-label">Volume</span>
+    <input class="pandora-volume-range" id="pandora-volume-range" type="range" min="0" max="100" step="1" value="42" aria-label="Volume da trilha de Pandora">
+    <span class="pandora-volume-value" id="pandora-volume-value">42%</span>
+  </label>
+</div>
+
+<audio id="pandora-theme-audio" loop preload="metadata" playsinline>
+  <source src="assets/audio/pandora-theme.mp3" type="audio/mpeg">
+</audio>
+
+<div class="auth-screen" id="auth-screen" aria-live="polite">
+  <form class="auth-panel" id="login-form">
+    <div class="auth-kicker">Acesso protegido</div>
+    <h2>Duda's Agenda</h2>
+    <p>Entre para sincronizar horários, lembretes e alarmes com segurança.</p>
+    <label class="form-label" for="login-password">Senha</label>
+    <input class="form-input" id="login-password" type="password" autocomplete="current-password" required>
+    <button class="btn btn-primary auth-submit" id="login-submit" type="submit">Entrar</button>
+    <button class="auth-link" id="forgot-password-btn" type="button">Enviar link por email</button>
+    <div class="auth-message" id="auth-message"></div>
+  </form>
+
+  <form class="auth-panel auth-reset-panel hidden" id="reset-password-form">
+    <div class="auth-kicker">Redefinir senha</div>
+    <h2>Nova senha</h2>
+    <p>Crie uma nova senha para voltar a acessar a agenda.</p>
+    <label class="form-label" for="reset-new-password">Nova senha</label>
+    <input class="form-input" id="reset-new-password" type="password" autocomplete="new-password" required minlength="10">
+    <label class="form-label" for="reset-confirm-password">Confirmar senha</label>
+    <input class="form-input" id="reset-confirm-password" type="password" autocomplete="new-password" required minlength="10">
+    <button class="btn btn-primary auth-submit" id="reset-password-submit" type="submit">Salvar nova senha</button>
+    <div class="auth-message" id="reset-auth-message"></div>
+  </form>
+</div>
+
+<div class="modal-overlay" id="modal-subject">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h3>Nova Matéria</h3>
+        <p>Adicione à grade de estudos</p>
+      </div>
+      <button class="modal-close" data-close-modal="modal-subject" type="button"><svg class="app-icon"><use href="#i-close"></use></svg></button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="subj-name">Nome da Matéria</label>
+      <input class="form-input" id="subj-name" placeholder="ex: Cálculo I, Inglês...">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="subj-day">Dia da Semana</label>
+        <select class="form-input" id="subj-day">
+          <option value="0">Domingo</option>
+          <option value="1">Segunda</option>
+          <option value="2">Terça</option>
+          <option value="3">Quarta</option>
+          <option value="4">Quinta</option>
+          <option value="5">Sexta</option>
+          <option value="6">Sábado</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="subj-slot">Horário</label>
+        <select class="form-input" id="subj-slot"></select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Cor</label>
+      <div class="color-picker" id="color-picker">
+        <button class="color-opt selected" data-color="#1d6fc4" style="background:#1d6fc4;" type="button"></button>
+        <button class="color-opt" data-color="#0891b2" style="background:#0891b2;" type="button"></button>
+        <button class="color-opt" data-color="#7c3aed" style="background:#7c3aed;" type="button"></button>
+        <button class="color-opt" data-color="#0f766e" style="background:#0f766e;" type="button"></button>
+        <button class="color-opt" data-color="#b45309" style="background:#b45309;" type="button"></button>
+        <button class="color-opt" data-color="#be185d" style="background:#be185d;" type="button"></button>
+        <button class="color-opt" data-color="#0369a1" style="background:#0369a1;" type="button"></button>
+        <button class="color-opt" data-color="#15803d" style="background:#15803d;" type="button"></button>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" data-close-modal="modal-subject" type="button">Cancelar</button>
+      <button class="btn btn-primary" id="save-subject-btn" type="button">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-password">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h3>Trocar senha</h3>
+        <p>Atualize a senha usada para proteger a agenda</p>
+      </div>
+      <button class="modal-close" data-close-modal="modal-password" type="button"><svg class="app-icon"><use href="#i-close"></use></svg></button>
+    </div>
+
+    <form id="change-password-form">
+      <div class="form-group">
+        <label class="form-label" for="current-password">Senha atual</label>
+        <input class="form-input" id="current-password" type="password" autocomplete="current-password" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="new-password">Nova senha</label>
+        <input class="form-input" id="new-password" type="password" autocomplete="new-password" required minlength="10">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="confirm-password">Confirmar nova senha</label>
+        <input class="form-input" id="confirm-password" type="password" autocomplete="new-password" required minlength="10">
+      </div>
+
+      <div class="auth-message" id="change-password-message"></div>
+
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close-modal="modal-password" type="button">Cancelar</button>
+        <button class="btn btn-primary" id="change-password-submit" type="submit">Salvar senha</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-reminder">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h3>Novo Lembrete</h3>
+        <p>Não deixe escapar nada importante</p>
+      </div>
+      <button class="modal-close" data-close-modal="modal-reminder" type="button"><svg class="app-icon"><use href="#i-close"></use></svg></button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="rem-title">Título</label>
+      <input class="form-input" id="rem-title" placeholder="ex: Entregar trabalho de Cálculo...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="rem-desc">Descrição (opcional)</label>
+      <input class="form-input" id="rem-desc" placeholder="Detalhes adicionais...">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="rem-date">Data</label>
+        <input class="form-input" id="rem-date" type="date">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="rem-time">Hora</label>
+        <input class="form-input" id="rem-time" type="time">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="rem-priority">Prioridade</label>
+      <select class="form-input" id="rem-priority">
+        <option value="alta">Alta</option>
+        <option value="media" selected>Média</option>
+        <option value="baixa">Baixa</option>
+      </select>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" data-close-modal="modal-reminder" type="button">Cancelar</button>
+      <button class="btn btn-primary" id="save-reminder-btn" type="button">Salvar Lembrete</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-alarm">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h3>Novo Alarme</h3>
+        <p>Configure um alerta recorrente</p>
+      </div>
+      <button class="modal-close" data-close-modal="modal-alarm" type="button"><svg class="app-icon"><use href="#i-close"></use></svg></button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="alm-time">Horário</label>
+      <input class="form-input" id="alm-time" type="time" value="08:00">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="alm-label">Rótulo</label>
+      <input class="form-input" id="alm-label" placeholder="ex: Início das aulas, Estudar Inglês...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Dias da Semana</label>
+      <div class="days-picker" id="alm-days-picker">
+        <label class="filter-chip"><input type="checkbox" value="0" hidden> Dom</label>
+        <label class="filter-chip"><input type="checkbox" value="1" hidden> Seg</label>
+        <label class="filter-chip"><input type="checkbox" value="2" hidden> Ter</label>
+        <label class="filter-chip"><input type="checkbox" value="3" hidden> Qua</label>
+        <label class="filter-chip"><input type="checkbox" value="4" hidden> Qui</label>
+        <label class="filter-chip"><input type="checkbox" value="5" hidden> Sex</label>
+        <label class="filter-chip"><input type="checkbox" value="6" hidden> Sáb</label>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" data-close-modal="modal-alarm" type="button">Cancelar</button>
+      <button class="btn btn-primary" id="save-alarm-btn" type="button">Salvar Alarme</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "dudas-agenda",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-site.js",
+    "hash-password": "node scripts/generate-password-hash.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.10.1",
+    "pg": "^8.11.5"
+  }
+}

@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+.chrome*/
+.edge*/
+auth-*.png
+mobile-*.png
+mobile-*.json
+ui-overhaul-*.png
+*-screenshot.png
+.codex/

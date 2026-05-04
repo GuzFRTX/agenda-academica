@@ -1,0 +1,39 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/sync"
+  to = "/.netlify/functions/sync"
+  status = 200
+
+[[redirects]]
+  from = "/api/login"
+  to = "/.netlify/functions/login"
+  status = 200
+
+[[redirects]]
+  from = "/api/logout"
+  to = "/.netlify/functions/logout"
+  status = 200
+
+[[redirects]]
+  from = "/api/session"
+  to = "/.netlify/functions/session"
+  status = 200
+
+[[redirects]]
+  from = "/api/change-password"
+  to = "/.netlify/functions/change-password"
+  status = 200
+
+[[redirects]]
+  from = "/api/request-password-reset"
+  to = "/.netlify/functions/request-password-reset"
+  status = 200
+
+[[redirects]]
+  from = "/api/reset-password"
+  to = "/.netlify/functions/reset-password"
+  status = 200
